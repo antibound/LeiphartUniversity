@@ -43,7 +43,7 @@ namespace LeiphartUniversity.Tests.Controllers
         {
             StudentController controller = new StudentController(studentsMock.Object);
 
-            var students = (List<Student>)controller.FirstNameSearch("eth");
+            var students = controller.FirstNameSearch("eth");
 
             Assert.AreEqual(1, students.Count);
         }
@@ -53,7 +53,7 @@ namespace LeiphartUniversity.Tests.Controllers
         {
             StudentController controller = new StudentController(studentsMock.Object);
 
-            var students = (List<Student>)controller.FirstNameSearch("ken");
+            var students = controller.FirstNameSearch("ken");
 
             Assert.AreEqual(1, students.Count);
         }
@@ -63,7 +63,7 @@ namespace LeiphartUniversity.Tests.Controllers
         {
             StudentController controller = new StudentController(studentsMock.Object);
 
-            var students = (List<Student>)controller.LastNameSearch("art");
+            var students = controller.LastNameSearch("art");
 
             Assert.AreEqual(2, students.Count);
         }
@@ -73,7 +73,7 @@ namespace LeiphartUniversity.Tests.Controllers
         {
             StudentController controller = new StudentController(studentsMock.Object);
 
-            var students = (List<Student>)controller.LastNameSearch("lei");
+            var students = controller.LastNameSearch("lei");
 
             Assert.AreEqual(2, students.Count);
         }
@@ -83,9 +83,17 @@ namespace LeiphartUniversity.Tests.Controllers
         {
             StudentController controller = new StudentController(studentsMock.Object);
 
-            var students = (List<Student>)controller.IdSearch("6204");
+            var students = controller.IdSearch("6204");
 
             Assert.AreEqual(1, students.Count);
+        }
+
+        [TestCase]
+        public void Is_Student_Currently_Enrolled_Test()
+        {
+            StudentController controller = new StudentController(studentsMock.Object);
+
+            var students = controller.isEnrolled("1930586204");
         }
     }
 }
