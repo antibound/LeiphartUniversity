@@ -15,7 +15,14 @@ namespace LeiphartUniversity.Helpers
 
             for (int i = 0; i < 10; ++i)
             {
-                newId.Append(random.Next(0, 9));
+                int digit = random.Next(0, 9);
+                if (digit != 0)
+                {
+                    newId.Append(digit);
+                }
+                else {
+                    --i;
+                }
             }
 
             return long.Parse(newId.ToString());
