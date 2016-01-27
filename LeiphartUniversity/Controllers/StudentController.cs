@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using LeiphartUniversity.Models;
 
 namespace LeiphartUniversity.Controllers
 {
@@ -17,11 +18,17 @@ namespace LeiphartUniversity.Controllers
         }
         // GET: Student
         public ViewResult Index()
+        { 
+            return View(db.Students.ToList());
+        }
+
+        public List<Student> FirstNameSearch(string v)
         {
             var students = from s in db.Students
+                           where s.FirstName.ToLower().Contains(v)
                            select s;
 
-            return View(db.Students.ToList());
+            return students.ToList();
         }
     }
 }
