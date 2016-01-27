@@ -67,5 +67,15 @@ namespace LeiphartUniversity.Tests.Controllers
 
             Assert.AreEqual(2, students.Count);
         }
+
+        [TestCase]
+        public void Student_Last_Name_Search_Capitalization_Test()
+        {
+            StudentController controller = new StudentController(studentsMock.Object);
+
+            var students = (List<Student>)controller.LastNameSearch("lei");
+
+            Assert.AreEqual(1, students.Count);
+        }
     }
 }
