@@ -33,5 +33,16 @@ namespace LeiphartUniversity.Tests
 
             Assert.AreEqual(5234567894, utility.GenerateUniversityId(random.Object));
         }
+
+        [TestCase]
+        public void Validate_Generated_Number_Can_Have_A_Zero_After_First_Digit_Test()
+        {
+            Utilities utility = new Utilities();
+            Mock<Random> random = new Mock<Random>();
+
+            random.SetupSequence(m => m.Next(0, 9)).Returns(5).Returns(2).Returns(0).Returns(4).Returns(5).Returns(6).Returns(7).Returns(8).Returns(9).Returns(4);
+
+            Assert.AreEqual(5204567894, utility.GenerateUniversityId(random.Object));
+        }
     }
 }

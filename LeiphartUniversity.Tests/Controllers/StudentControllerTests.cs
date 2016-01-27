@@ -89,11 +89,20 @@ namespace LeiphartUniversity.Tests.Controllers
         }
 
         [TestCase]
-        public void Is_Student_Currently_Enrolled_Test()
+        public void Is_Student_Currently_Enrolled_In_School_Test()
         {
             StudentController controller = new StudentController(studentsMock.Object);
 
             var students = controller.IsEnrolled("1930586204");
         }
+
+        //Create_Student_Test
+        //Create_Student_Failed_No_First_Name_Test
+        //Create_Student_Failed_No_Last_Name_Test
+        //Create_Student_Failed_ID_Already_Exists_Test (Pobably should just retry the id creation instead of a failure)
+        //Student_Enroll_In_Class_Successfully_Test
+        //Student_Enroll_In_Class_Failed_Not_Current_Student_Test
+        //Student_Enroll_In_Class_Failed_Class_Overlaps_Other_Class_Test
+        //Student_Enroll_In_Class_Failed_Unmet_Requirements_Test
     }
 }
