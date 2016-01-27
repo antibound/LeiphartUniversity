@@ -39,7 +39,7 @@ namespace LeiphartUniversity.Tests.Controllers
         }
 
         [TestCase]
-        public void First_Name_WildCard_In_Front_Search_Test()
+        public void Student_First_Name_WildCard_In_Front_Search_Test()
         {
             StudentController controller = new StudentController(studentsMock.Object);
 
@@ -49,7 +49,7 @@ namespace LeiphartUniversity.Tests.Controllers
         }
 
         [TestCase]
-        public void Last_Name_WildCard_In_Front_Search_Test()
+        public void Student_Last_Name_WildCard_In_Front_Search_Test()
         {
             StudentController controller = new StudentController(studentsMock.Object);
 
