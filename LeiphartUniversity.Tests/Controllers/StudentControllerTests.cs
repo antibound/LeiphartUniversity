@@ -75,7 +75,7 @@ namespace LeiphartUniversity.Tests.Controllers
 
             var students = (List<Student>)controller.LastNameSearch("lei");
 
-            Assert.AreEqual(1, students.Count);
+            Assert.AreEqual(2, students.Count);
         }
     }
 }
