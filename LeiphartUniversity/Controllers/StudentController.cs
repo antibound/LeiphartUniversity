@@ -48,5 +48,14 @@ namespace LeiphartUniversity.Controllers
 
             return students.ToList();
         }
+
+        public bool IsEnrolled(string id)
+        {
+            var students = from s in db.Students
+                           where s.ID.ToString().Equals(id)
+                           select s;
+
+            return students.Count() == 0 ? true : false;
+        }
     }
 }

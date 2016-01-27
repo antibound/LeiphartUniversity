@@ -93,7 +93,7 @@ namespace LeiphartUniversity.Tests.Controllers
         {
             StudentController controller = new StudentController(studentsMock.Object);
 
-            var students = controller.isEnrolled("1930586204");
+            var students = controller.IsEnrolled("1930586204");
         }
     }
 }
