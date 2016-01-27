@@ -77,5 +77,15 @@ namespace LeiphartUniversity.Tests.Controllers
 
             Assert.AreEqual(2, students.Count);
         }
+
+        [TestCase]
+        public void Student_ID_Wildcard_In_Front_Search_Test()
+        {
+            StudentController controller = new StudentController(studentsMock.Object);
+
+            var students = (List<Student>)controller.IdSearch("6204");
+
+            Assert.AreEqual(1, students.Count);
+        }
     }
 }
