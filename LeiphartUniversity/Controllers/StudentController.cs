@@ -25,7 +25,7 @@ namespace LeiphartUniversity.Controllers
         public List<Student> FirstNameSearch(string v)
         {
             var students = from s in db.Students
-                           where s.FirstName.Contains(v)
+                           where s.FirstName.ToLower().Contains(v)
                            select s;
 
             return students.ToList();

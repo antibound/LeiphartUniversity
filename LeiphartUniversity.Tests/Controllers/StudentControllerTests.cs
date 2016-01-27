@@ -49,6 +49,16 @@ namespace LeiphartUniversity.Tests.Controllers
         }
 
         [TestCase]
+        public void Student_First_Name_Search_Capitalization_Test()
+        {
+            StudentController controller = new StudentController(studentsMock.Object);
+
+            var students = (List<Student>)controller.FirstNameSearch("ken");
+
+            Assert.AreEqual(1, students.Count);
+        }
+
+        [TestCase]
         public void Student_Last_Name_WildCard_In_Front_Search_Test()
         {
             StudentController controller = new StudentController(studentsMock.Object);
