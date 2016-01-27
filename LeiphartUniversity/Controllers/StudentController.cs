@@ -39,5 +39,14 @@ namespace LeiphartUniversity.Controllers
 
             return students.ToList();
         }
+
+        public List<Student> IdSearch(string id)
+        {
+            var students = from s in db.Students
+                           where s.ID.ToString().Contains(id)
+                           select s;
+
+            return students.ToList();
+        }
     }
 }
