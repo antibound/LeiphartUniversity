@@ -43,9 +43,19 @@ namespace LeiphartUniversity.Tests.Controllers
         {
             StudentController controller = new StudentController(studentsMock.Object);
 
-            var students = (List<Student>)controller.FirstNameSearch("ken");
+            var students = (List<Student>)controller.FirstNameSearch("eth");
 
             Assert.AreEqual(1, students.Count);
+        }
+
+        [TestCase]
+        public void Last_Name_WildCard_In_Front_Search_Test()
+        {
+            StudentController controller = new StudentController(studentsMock.Object);
+
+            var students = (List<Student>)controller.LastNameSearch("art");
+
+            Assert.AreEqual(2, students.Count);
         }
     }
 }
