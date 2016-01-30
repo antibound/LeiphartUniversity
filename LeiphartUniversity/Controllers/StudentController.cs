@@ -58,11 +58,9 @@ namespace LeiphartUniversity.Controllers
             return students.Count() == 0 ? true : false;
         }
 
-        public ViewResult Create(Student student)
+        public void Create(Student student)
         {
-            db.Students.Add(student);
-
-            return View(db.Students.ToList());
+            db.Students.Add(student);            
         }
     }
 }

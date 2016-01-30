@@ -127,20 +127,15 @@ namespace LeiphartUniversity.Tests.Controllers
             StudentController controller = new StudentController(studentsMock.Object);
             Student student = new Student();
 
-            student.FirstName = "Dave";
+            student.FirstName = "";
             student.LastName = "Winner";
 
-            ViewResult view = controller.Create(student);
-
-            mockSet.Verify(s => s.Add(It.IsAny<Student>()), Times.Once());
-
             var results = new List<ValidationResult>();
-            var validationContext = new ValidationContext(view.Model, null, null);
-            Validator.TryValidateObject(view.Model, validationContext, results, true);
-            if (view.Model is IValidatableObject) (view.Model as IValidatableObject).Validate(validationContext);
-            //return results;
-
-            Assert.Equals("First name is required.", results[0].ErrorMessage);
+            var validationContext = new ValidationContext(student, null, null);
+            Validator.TryValidateObject(student, validationContext, results, true);
+            if (student is IValidatableObject) (student as IValidatableObject).Validate(validationContext);
+            
+            Assert.AreEqual("First name is required.", results[0].ErrorMessage);
         }
         //Create_Student_Failed_No_Last_Name_Test
         //Create_Student_Failed_ID_Already_Exists_Test (Pobably should just retry the id creation instead of a failure)
