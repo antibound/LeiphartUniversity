@@ -96,7 +96,19 @@ namespace LeiphartUniversity.Tests.Controllers
             var students = controller.IsEnrolled("1930586204");
         }
 
-        //Create_Student_Test
+        [TestCase]
+        public void Create_Student_Successfully_Test()
+        {
+            StudentController student = new StudentController(studentsMock.Object);
+            Student newStudent = new Student();
+
+            newStudent.FirstName = "Dave";
+            newStudent.LastName = "Winner";
+
+            student.Create(newStudent);
+
+            Assert.Contains(newStudent, student.LastNameSearch(""));
+        }
         //Create_Student_Failed_No_First_Name_Test
         //Create_Student_Failed_No_Last_Name_Test
         //Create_Student_Failed_ID_Already_Exists_Test (Pobably should just retry the id creation instead of a failure)

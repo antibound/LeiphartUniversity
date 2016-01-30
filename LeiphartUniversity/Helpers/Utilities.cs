@@ -16,7 +16,7 @@ namespace LeiphartUniversity.Helpers
             for (int i = 0; i < 10; ++i)
             {
                 int digit = random.Next(0, 9);
-                if (digit != 0)
+                if (digit != 0 || i > 0)
                 {
                     newId.Append(digit);
                 }
