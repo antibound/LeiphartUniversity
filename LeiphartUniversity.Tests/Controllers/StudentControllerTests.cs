@@ -9,6 +9,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace LeiphartUniversity.Tests.Controllers
 {
@@ -118,7 +119,20 @@ namespace LeiphartUniversity.Tests.Controllers
 
             mockSet.Verify(s => s.Add(It.IsAny<Student>()), Times.Once());
         }
-        //Create_Student_Failed_No_First_Name_Test
+
+        public void Create_Student_Failed_No_First_Name_Test()
+        {
+            StudentController controller = new StudentController(studentsMock.Object);
+            Student student = new Student();
+
+            student.FirstName = "Dave";
+            student.LastName = "Winner";
+
+            ViewResult view = controller.Create(student);
+
+            mockSet.Verify(s => s.Add(It.IsAny<Student>()), Times.Once());
+            Assert.Equals("First name is required.", )
+        }
         //Create_Student_Failed_No_Last_Name_Test
         //Create_Student_Failed_ID_Already_Exists_Test (Pobably should just retry the id creation instead of a failure)
         //Student_Enroll_In_Class_Successfully_Test
