@@ -5,6 +5,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -120,6 +121,7 @@ namespace LeiphartUniversity.Tests.Controllers
             mockSet.Verify(s => s.Add(It.IsAny<Student>()), Times.Once());
         }
 
+        [TestCase]
         public void Create_Student_Failed_No_First_Name_Test()
         {
             StudentController controller = new StudentController(studentsMock.Object);
@@ -131,7 +133,14 @@ namespace LeiphartUniversity.Tests.Controllers
             ViewResult view = controller.Create(student);
 
             mockSet.Verify(s => s.Add(It.IsAny<Student>()), Times.Once());
-            Assert.Equals("First name is required.", )
+
+            var results = new List<ValidationResult>();
+            var validationContext = new ValidationContext(view.Model, null, null);
+            Validator.TryValidateObject(view.Model, validationContext, results, true);
+            if (view.Model is IValidatableObject) (view.Model as IValidatableObject).Validate(validationContext);
+            //return results;
+
+            Assert.Equals("First name is required.", results[0].ErrorMessage);
         }
         //Create_Student_Failed_No_Last_Name_Test
         //Create_Student_Failed_ID_Already_Exists_Test (Pobably should just retry the id creation instead of a failure)
