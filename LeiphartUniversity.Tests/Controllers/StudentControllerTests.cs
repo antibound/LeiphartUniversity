@@ -110,6 +110,8 @@ namespace LeiphartUniversity.Tests.Controllers
         [TestCase]
         public void Create_Student_Successfully_Test()
         {
+            Student newStudent = null;
+            mockSet.Setup(x => x.Add(It.IsAny<Student>())).Callback<Student>((copyStudent) => { newStudent = copyStudent; });
             StudentController controller = new StudentController(studentsMock.Object);
             Student student = new Student();
 
@@ -118,7 +120,8 @@ namespace LeiphartUniversity.Tests.Controllers
 
             controller.Create(student);
 
-            mockSet.Verify(s => s.Add(It.IsAny<Student>()), Times.Once());
+            mockSet.Verify(s => s.Add(It.Is<Student>(x => x.ID.ToString().Length > 0)), Times.Once());
+            Assert.AreEqual(10, newStudent.ID.ToString().Length);
         }
 
         [TestCase]
