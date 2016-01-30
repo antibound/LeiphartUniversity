@@ -137,7 +137,23 @@ namespace LeiphartUniversity.Tests.Controllers
             
             Assert.AreEqual("First name is required.", results[0].ErrorMessage);
         }
-        //Create_Student_Failed_No_Last_Name_Test
+
+        [TestCase]
+        public void Create_Student_Failed_No_Last_Name_Test()
+        {
+            StudentController controller = new StudentController(studentsMock.Object);
+            Student student = new Student();
+
+            student.FirstName = "Dave";
+            student.LastName = "";
+
+            var results = new List<ValidationResult>();
+            var validationContext = new ValidationContext(student, null, null);
+            Validator.TryValidateObject(student, validationContext, results, true);
+            if (student is IValidatableObject) (student as IValidatableObject).Validate(validationContext);
+
+            Assert.AreEqual("Last name is required.", results[0].ErrorMessage);
+        }
         //Create_Student_Failed_ID_Already_Exists_Test (Pobably should just retry the id creation instead of a failure)
         //Student_Enroll_In_Class_Successfully_Test
         //Student_Enroll_In_Class_Failed_Not_Current_Student_Test
