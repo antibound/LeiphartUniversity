@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LeiphartUniversity.Models;
+using LeiphartUniversity.Helpers;
 
 namespace LeiphartUniversity.Controllers
 {
@@ -60,6 +61,10 @@ namespace LeiphartUniversity.Controllers
 
         public void Create(Student student)
         {
+            Utilities utility = new Utilities();
+            Random random = new Random();
+
+            student.ID = utility.GenerateUniversityId(random);
             db.Students.Add(student);            
         }
     }
