@@ -1,5 +1,6 @@
 ﻿using LeiphartUniversity.Controllers;
 using LeiphartUniversity.DAL;
+using LeiphartUniversity.Helpers;
 using LeiphartUniversity.Models;
 using Moq;
 using NUnit.Framework;
@@ -157,10 +158,21 @@ namespace LeiphartUniversity.Tests.Controllers
 
             Assert.AreEqual("Last name is required.", results[0].ErrorMessage);
         }
-        //Create_Student_Failed_ID_Already_Exists_Test (Pobably should just retry the id creation instead of a failure)
-        //Student_Enroll_In_Class_Successfully_Test
-        //Student_Enroll_In_Class_Failed_Not_Current_Student_Test
-        //Student_Enroll_In_Class_Failed_Class_Overlaps_Other_Class_Test
-        //Student_Enroll_In_Class_Failed_Unmet_Requirements_Test
+        
+        [TestCase]
+        public void Create_Student_ID_Already_Exists_Success_Test()
+        {
+            Mock<Utilities> utilMock = new Mock<Utilities>();
+            Mock<Random> random = new Mock<Random>();
+
+            random.SetupSequence(m => m.Next(0, 9)).Returns(0).Returns(5).Returns(2).Returns(3).Returns(4).Returns(5).Returns(6).Returns(7).Returns(8).Returns(9).Returns(4);
+
+            utilMock.Setup(m => m.GenerateUniversityId(random.Object));//.Returns(mockSet.Object);
+
+            StudentController controller = new StudentController(studentsMock.Object);
+            Student student = new Student(utilMock.Object);
+
+            student.Create("Maria", "Oliver");
+        }
     }
 }
