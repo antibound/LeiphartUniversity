@@ -17,18 +17,18 @@ namespace LeiphartUniversity.Tests.Controllers
 {
     class StudentControllerTests
     {
-        public Mock<IStudentRepository> studentsMock;
+        public Mock<FakeStudentRepository> studentsMock;
         Mock<DbSet<Student>> mockSet;
 
         [OneTimeSetUp]
         public void SetupData()
         {
-            studentsMock = new Mock<IStudentRepository>();
+            studentsMock = new Mock<FakeStudentRepository>();
             var students = new Student[]{
             new Student() { ID = 1930586204, FirstName = "Kenneth", LastName = "Leiphart" },
-            new Student() { ID = 2052873025, FirstName = "Diana", LastName = "Leiphart" },
-            new Student() { ID = 3621126689, FirstName = "Eric", LastName = "Lakatosh" },
-            new Student() { ID = 1115790449, FirstName = "Joseph", LastName = "Smith" }
+            new Student() { ID = 1930586205, FirstName = "Diana", LastName = "Leiphart" },
+            new Student() { ID = 1930586206, FirstName = "Eric", LastName = "Lakatosh" },
+            new Student() { ID = 1930586207, FirstName = "Joseph", LastName = "Smith" }
             }.AsQueryable();
 
             mockSet = new Mock<DbSet<Student>>();
@@ -111,18 +111,12 @@ namespace LeiphartUniversity.Tests.Controllers
         [TestCase]
         public void Create_Student_Successfully_Test()
         {
-            Student newStudent = null;
-            mockSet.Setup(x => x.Add(It.IsAny<Student>())).Callback<Student>((copyStudent) => { newStudent = copyStudent; });
             StudentController controller = new StudentController(studentsMock.Object);
-            Student student = new Student();
 
-            student.FirstName = "Dave";
-            student.LastName = "Winner";
+            Student newStudent = controller.Create("Dave", "Winner");
 
-            controller.Create(student);
-
-            mockSet.Verify(s => s.Add(It.Is<Student>(x => x.ID.ToString().Length > 0)), Times.Once());
-            Assert.AreEqual(10, newStudent.ID.ToString().Length);
+            Assert.AreEqual("Dave", newStudent.FirstName);
+            Assert.AreEqual("Winner", newStudent.LastName);
         }
 
         [TestCase]
@@ -157,22 +151,6 @@ namespace LeiphartUniversity.Tests.Controllers
             if (student is IValidatableObject) (student as IValidatableObject).Validate(validationContext);
 
             Assert.AreEqual("Last name is required.", results[0].ErrorMessage);
-        }
-        
-        [TestCase]
-        public void Create_Student_ID_Already_Exists_Success_Test()
-        {
-            Mock<Utilities> utilMock = new Mock<Utilities>();
-            Mock<Random> random = new Mock<Random>();
-
-            random.SetupSequence(m => m.Next(0, 9)).Returns(0).Returns(5).Returns(2).Returns(3).Returns(4).Returns(5).Returns(6).Returns(7).Returns(8).Returns(9).Returns(4);
-
-            utilMock.Setup(m => m.GenerateUniversityId(random.Object));//.Returns(mockSet.Object);
-
-            StudentController controller = new StudentController(studentsMock.Object);
-            Student student = new Student(utilMock.Object);
-
-            student.Create("Maria", "Oliver");
         }
     }
 }

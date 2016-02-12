@@ -17,7 +17,7 @@ namespace LeiphartUniversity.Controllers
         {
             db = studentRepo;
         }
-        // GET: Student
+
         public ViewResult Index()
         { 
             return View(db.Students.ToList());
@@ -59,13 +59,16 @@ namespace LeiphartUniversity.Controllers
             return students.Count() == 0 ? true : false;
         }
 
-        public void Create(Student student)
+        public Student Create(String firstName, String lastName)
         {
-            Utilities utility = new Utilities();
-            Random random = new Random();
+            Student student = new Student();
 
-            student.ID = utility.GenerateUniversityId(random);
-            db.Students.Add(student);            
+            student.FirstName = firstName;
+            student.LastName = lastName;
+
+            db.Students.Add(student);
+
+            return student;
         }
     }
 }
